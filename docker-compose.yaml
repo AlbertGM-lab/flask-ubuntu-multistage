@@ -1,0 +1,17 @@
+services:
+  flask-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    container_name: ubuntu-multi-prod
+    working_dir: /app
+    environment:
+      - VENV_PATH=/venv
+    volumes:
+      - ./app.py:/app/app.py
+      - ./templates:/app/templates
+      - ./static:/app/static
+    user: flaskuser  # Corre la app como usuario específico
+#    restart: always

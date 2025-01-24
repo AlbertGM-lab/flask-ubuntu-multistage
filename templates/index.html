@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="container py-4">
+    <div class="mb-4 align-items-stretch text-center justify-content-between text-white shadow bg-dark rounded-3 pb-0 pe-lg-0 py-lg-3">
+        <div class="container-fluid py-1">
+            <h1 class="display-5 fw-bold bg-white text-black align-items-center text-center" style="width: 6%; border-radius: 20%; height: auto;">>_ </h1>
+            <h1 class="fw-bold display-5 align-items-center fs-0">Hello World!</h1>
+            <div id="text1" class="mb-2 typing-container fs-5"></div>
+            <div id="text2" class="mb-2 typing-container fs-5"></div>
+        </div>
+    </div>
+
+    <div class="row align-items-stretch">
+        <div class="col">
+            <div class="p-5 shadow bg-light border rounded-3 d-flex flex-column justify-content-between h-100">
+                <a href="https://github.com/AlbertGM-lab" target="_blank"><img src="{{ url_for('static', filename='img/github.png') }}" alt="GitHub" class="d-flex mx-auto icon mb-3 align-items-center" style="width: 10%; height: auto;"></a>
+                <h2 class="fs-0 text-center fw-bold">🔗 Check out my GitHub for more awesome templates 🔗</h2>
+                <p class="fs-5 text-center">Dive into my repository where you'll find various Docker container templates ready to help you kickstart your projects. Whether you’re building web apps, APIs, or microservices, these templates are tailored to make your Flask deployments seamless and efficient.</p>
+                <p class="fs-5 text-center">Let&apos;s collaborate and build something amazing together!</p>
+                <div class="text-end mt-auto">
+                    <a href="https://github.com/AlbertGM-lab" target="_blank" class="d-flex justify-content-center text-decoration-none"><button class="btn btn-outline-danger" type="button">Go!</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const texts = {
+        text1: "This project provides a set of ready-to-use templates for creating Docker containers to host Flask applications that are production-ready. Each template is designed with best practices in mind, ensuring easy deployment, scalability, and efficient resource utilization.",
+        text2: "From simple single-container setups to more complex multi-container configurations, this project helps developers streamline the process of building, deploying, and managing Flask applications in containerized environments. Perfect for those looking to deploy their Flask applications with minimal hassle and maximum reliability."
+    };
+
+    function createCursor() {
+        const cursor = document.createElement('span');
+        cursor.className = 'cursor';
+        cursor.style.position = 'absolute';
+        cursor.style.display = 'inline-block';
+        cursor.style.width = '10px';
+        cursor.style.height = '30px';
+        cursor.style.backgroundColor = 'white';
+        cursor.style.animation = 'blink 1s infinite';
+        return cursor;
+    }
+
+    async function typeText(elementId, text, speed = 50) {
+        return new Promise(resolve => {
+            const element = document.getElementById(elementId);
+            const cursor = createCursor();
+            element.appendChild(cursor);
+            let i = 0;
+
+            function type() {
+                if (i < text.length) {
+                    const char = document.createElement('span');
+                    char.textContent = text.charAt(i);
+                    element.insertBefore(char, cursor);
+                    i++;
+                    cursor.style.left = `${char.offsetLeft + char.offsetWidth}px`;
+                    cursor.style.top = `${char.offsetTop}px`;
+                    setTimeout(type, speed);
+                } else {
+                    element.removeChild(cursor); // Remove the cursor after typing is done
+                    resolve();
+                }
+            }
+
+            type();
+        });
+    }
+
+    async function startTyping() {
+        await typeText('text1', texts.text1, 20);
+        await typeText('text2', texts.text2, 20);
+    }
+
+    document.addEventListener('DOMContentLoaded', startTyping);
+</script>
+{% endblock %}
